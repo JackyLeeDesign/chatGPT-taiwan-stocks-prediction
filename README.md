@@ -19,9 +19,9 @@ The following prompt was crafted to interact with GPT-o3-mini, aiming to simulat
 prompt = (  
    f"""
         You are a financial analyst, and I am your client. Please provide a concise stock analysis and trading suggestions based on the following information:
-        
+
         Relevant Data:
-        
+   
         Stock price data: {{formatted_stock_data}}
         Industry share: {{stock_industry}}
         Today's date: {{time.strftime('%Y-%m-%d')}}
@@ -29,9 +29,9 @@ prompt = (
         Latest K value: {{kd_value['K_value']}}
         Latest D value: {{kd_value['D_value']}}
         20-day average volume: (total shares traded over the last 20 days / 20)
-        
+   
         Tasks:
-        
+   
         1. Use the latest news summary as a reference to perform technical analysis for deriving final insights.
         2. Analyze the KD values as follows:
         - KD Golden Cross (K value breaking above D value): Buy point
@@ -41,16 +41,14 @@ prompt = (
         - KD value between 20 and 90 and daily volume > 20-day average volume: Continue to observe
         - KD value > 80 and daily volume > 20-day average volume: High-end oscillation
         - KD value < 20 and daily volume < 20-day average volume: Low-end oscillation
-        
+   
         3. Additionally, leverage the existing data to perform any relevant technical analysis (without introducing new variables), such as examining trend lines, support and resistance levels, or using insights from the latest news to contextualize the KD analysis.
-        
+   
         Response Format:
-        
-        1. Recent key news points: Provide the most significant items in English and their translations as needed.
-        2. Next opening price prediction: e.g., 1xx.x (TWD).
-        3. Next closing price prediction: e.g., 1xx.x (TWD).
-        4. 9-day RSV calculation (Formula: (today's close - lowest in 9 days) / (highest in 9 days - lowest in 9 days) * 100).
-        5. Analysis suggestions: Based on your technical analysis and current affairs, suggest actions such as 'buy', 'sell', 'hold', etc., and comment on future trends if not favorable.
+        1. Next opening price prediction.
+        2. Next closing price prediction.
+        3. 9-day RSV calculation.
+        4. Analysis suggestions: Provide concise actions (e.g., 'buy', 'sell', 'hold') and a brief comment on trends.
     """
 )
 ```
