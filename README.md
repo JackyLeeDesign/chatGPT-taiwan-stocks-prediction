@@ -17,31 +17,41 @@ The following prompt was crafted to interact with GPT-o3-mini, aiming to simulat
 ```python
 # Define prompt for GPT-4  
 prompt = (  
-    f"You are a financial analyst, and I am your client. It is important to maintain my trust by providing insightful and accurate stock predictions and analysis.\n"  
-    f"Here is the relevant data:\n"
-    f"1. Stock price data: {formatted_stock_data}\n"
-    f"2. Industry share: {stock_industry}\n"
-    f"3. Today's date: {time.strftime('%Y-%m-%d')}\n"
-    f"4. Latest news:\n{news_summary}\n"
-    f"5. Latest K value: {kd_value['K_value']}\n"
-    f"6. Latest D value: {kd_value['D_value']}\n"
-    f"Tasks for you:\n"  
-    f"1. Use the provided latest news summary as a reference for your stock trend analysis.\n"
-    f"2. Perform your own comprehensive and mainstream technical analysis.\n"
-    f"3. Predict whether today's closing price or tomorrow's opening price indicates a buying opportunity. Clearly highlight if it is.\n"
-    f"4. Provide predicted selling points for short-term (within 1 month), mid-term (1-3 months), and long-term (3-6 months) holdings.\n"
-    f"5. Even if you do not see a buying opportunity, based on your analysis, explain why you don't favor the future trend.\n"
-    f"Notes:"
-    f"- Continue using my input data for reference without change.\n"
-    f"- If there are no stock prices for today, use the date of the latest stock data as today's date.\n"
-    f"Response Format:\n"
-    f"1. Recent news: {news_summary}, and list key news points in English. (You don't need to mention 'Translated to English')\n"
-    f"2. Next opening price prediction: Base on technical analysis and data, e.g., 1xx.x (TWD)\n"       
-    f"3. Next closing price prediction: Base on technical analysis and data, e.g., 1xx.x (TWD)\n"  
-    f"4. 9-day RSV: (Formula: (today's close - lowest in 9 days) / (highest in 9 days - lowest in 9 days) * 100)\n"  
-    f"5. 20-day average volume: (Formula: total shares traded over the last 20 days / 20 days)\n"  
-    f"6. Analysis suggestions: Based on your own comprehensive and mainstream technical analysis and current affairs, suggest actions such as 'buy', 'sell', 'hold', etc., and comment on future trends if not favorable.\n"
-    f"You don't need to add 'Please let me know if you need further details or additional analysis.' at the end\n"
+   f"""
+        You are a financial analyst, and I am your client. Please provide a concise stock analysis and trading suggestions based on the following information:
+        
+        Relevant Data:
+        
+        Stock price data: {{formatted_stock_data}}
+        Industry share: {{stock_industry}}
+        Today's date: {{time.strftime('%Y-%m-%d')}}
+        Latest news summary: {{news_summary}}
+        Latest K value: {{kd_value['K_value']}}
+        Latest D value: {{kd_value['D_value']}}
+        20-day average volume: (total shares traded over the last 20 days / 20)
+        
+        Tasks:
+        
+        1. Use the latest news summary as a reference to perform technical analysis for deriving final insights.
+        2. Analyze the KD values as follows:
+        - KD Golden Cross (K value breaking above D value): Buy point
+        - KD Death Cross (K value breaking below D value): Sell point
+        - KD value < 20 and daily volume > 20-day average volume: Buy point
+        - KD value > 90 and daily volume < 20-day average volume: Sell point
+        - KD value between 20 and 90 and daily volume > 20-day average volume: Continue to observe
+        - KD value > 80 and daily volume > 20-day average volume: High-end oscillation
+        - KD value < 20 and daily volume < 20-day average volume: Low-end oscillation
+        
+        3. Additionally, leverage the existing data to perform any relevant technical analysis (without introducing new variables), such as examining trend lines, support and resistance levels, or using insights from the latest news to contextualize the KD analysis.
+        
+        Response Format:
+        
+        1. Recent key news points: Provide the most significant items in English and their translations as needed.
+        2. Next opening price prediction: e.g., 1xx.x (TWD).
+        3. Next closing price prediction: e.g., 1xx.x (TWD).
+        4. 9-day RSV calculation (Formula: (today's close - lowest in 9 days) / (highest in 9 days - lowest in 9 days) * 100).
+        5. Analysis suggestions: Based on your technical analysis and current affairs, suggest actions such as 'buy', 'sell', 'hold', etc., and comment on future trends if not favorable.
+    """
 )
 ```
 
